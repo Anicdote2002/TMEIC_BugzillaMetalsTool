@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+		Id="*"
+		Name="Zone Manager"
+		Language="1033"
+		Version="!(bind.FileVersion.AppExe)"
+		Manufacturer="TMEIC"
+		UpgradeCode="E6A0F2E0-7915-4B24-86F2-F86F046BEA14">
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <!-- Require admin access to install -->
+    <Condition Message="You need to be an administrator to install this product.">
+      Privileged
+    </Condition>
+    <!-- Require .NET 4.0 minimum -->
+    <Condition Message="This setup requires the .NET Framework 4.0 or higher.">
+      <![CDATA[MsiNetAssemblySupport >= "4.0.0.0"]]>
+    </Condition>
+
+    <!-- Prohibits downgrades -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+
+    <!-- You can add different feature groups here to install different componenet groups -->
+    <!-- Every componenent group listed will be installed whenever this feature is selected-->
+    <Feature Id="ProductFeature" Title="FullInstall" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProductDocumentation" />
+      <ComponentGroupRef Id="Licenses" />
+      <!--Tell WiX to create program data folder with write access, must be done before addiing stuff to folder -->
+      <ComponentGroupRef Id="ProgDataFiles" />
+      <ComponentRef Id="ProgramDataComponent" />
+      <!--Tell WiX to install the shortcut -->
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <!-- This line determines the licese file which is displyed during install -->
+    <WixVariable Id="WixUILicenseRtf" Value="..\Documentation\Licenses\License.rtf" />
+    <!-- This controls the banner shown on the side of the installer window -->
+    <WixVariable Id="WixUIDialogBmp" Value="..\Documentation\InstallerBanner.bmp" />
+
+    <!-- This is the variable for the target install dir -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <!-- This preloads a standed UI for the installer, i.e. defines its look -->
+    <UIRef Id="WixUI_InstallDir" />
+  </Product>
+
+  <!-- This fragment describes/creates all of the required directory structures-->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <!--Create the appropriate ProgramData folder and permit EVERYONE access, otherwise its restricted to admin users-->
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="TMEICDATADIR" Name="!(bind.property.Manufacturer)">
+          <Directory Id="PROGRAMDATA" Name="!(bind.property.ProductName)">
+            <Component Id="ProgramDataComponent" Guid="100069C3-B70E-442C-9E8B-3E41398E088A">
+              <CreateFolder Directory="PROGRAMDATA">
+                <Permission User="Everyone" GenericAll="yes" />
+              </CreateFolder>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!-- Add program files folder-->
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="TMEICDIR" Name="!(bind.property.Manufacturer)">
+          <Directory Id="INSTALLDIR" Name="!(bind.property.ProductName)">
+            <Directory Id="DOCUMENTATION" Name="Documentation" />
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!--This is directory listing for a start menu shortcut-->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="!(bind.property.Manufacturer)" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <!--This fragment is to install a shortcut on the start menu-->
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+									Name="!(bind.property.ProductName)"
+									Description="Allows live trending of data from an OPC server"
+									Target="[INSTALLDIR]PLOTT.exe"
+									WorkingDirectory="INSTALLDIR" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\!(bind.property.ProductName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <!-- Start using "*" for dynamic component GUID's, this saves creating them by hand-->
+
+  <!--Install info for the main exe and other files to which must be with it-->
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLDIR">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <Component Id="MainEXE" Guid="*">
+        <File Id="AppExe" Name="PLOTT.exe" Source="..\bin\Release\PLOTT.exe" Vital="yes" />
+      </Component>
+      <Component Id="SciChartDLL" Guid="*">
+        <File Id="SciChartDLL" Name="Abt.Controls.SciChart.Wpf.2.32.dll" Source="..\bin\Release\Abt.Controls.SciChart.Wpf.2.32.dll" Vital="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!--Install info for documentation items-->
+  <Fragment>
+    <ComponentGroup Id="ProductDocumentation" Directory="DOCUMENTATION">
+      <Component Id="ReleaseNotes" Guid="*">
+        <File Id="ReleaseNotes" Name="ReleaseNotes.txt" Source="..\Documentation\ReleaseNotes.txt" Vital="no" />
+      </Component>
+
+      <Component Id="DocumentationExampleConfig" Guid="*">
+        <File Id="DocumentationExampleConfig" Name="ConfigExample.xml" Source="..\Documentation\ConfigExample.xml" Vital="yes" />
+      </Component>
+      <Component Id="UsersGuide" Guid="*">
+        <File Id="UsersGuide" Name="UsersGuide.pdf" Source="..\Documentation\UsersGuide.pdf" Vital="no" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!-- Install Stuff In Program Data -->
+  <Fragment>
+    <ComponentGroup Id="ProgDataFiles" Directory="PROGRAMDATA">
+      <Component NeverOverwrite="yes" Id="ProgDataExampleConfig" Guid="*" Permanent="yes">
+        <File Id="ProgDataExampleConfig" Name="Config.xml" Source="..\Documentation\ConfigExample.xml" Vital="yes" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>
