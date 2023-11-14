@@ -7,14 +7,14 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Metals Project Creation Tool.exe.manifest" size="3576">
+    <dependentAssembly dependencyType="install" codebase="Metals Project Creation Tool.exe.manifest" size="4261">
       <assemblyIdentity name="Metals Project Creation Tool.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>M457+A/evPPoj6GW9xI+Zclsq+MRTaSDFR3I00YLi8k=</dsig:DigestValue>
+        <dsig:DigestValue>Z1SDLttmEn6roaQ+wp5+QVl5DutYuLXfM80ONMUzg2Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

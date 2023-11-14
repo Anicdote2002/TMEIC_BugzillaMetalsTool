@@ -42,14 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Metals Project Creation Tool.exe" size="46008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HtmlAgilityPack.dll" size="170496">
+      <assemblyIdentity name="HtmlAgilityPack" version="1.11.54.0" publicKeyToken="BD319B19EAF3B43A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>oJoUU01Rxd/Yj8NxRbHXAKz59X9ulbgbjJhMt0sf7Hg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Metals Project Creation Tool.exe" size="52664">
       <assemblyIdentity name="Metals Project Creation Tool" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SNAAOjd8Q/QwqBdBO11R9n24FPEsA4vEftu+DJ1VvSY=</dsig:DigestValue>
+        <dsig:DigestValue>Xr6C86A6ZtKgULz2v93bvWdLiG/u9R3fYd650+XYC1Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

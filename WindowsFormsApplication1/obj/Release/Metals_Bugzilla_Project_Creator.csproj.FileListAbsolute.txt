@@ -24,3 +24,21 @@ C:\Bugzilla\Bugzilla-Metals_Project_Creation_Utility_v4\Bugzilla-Metals_Project_
 C:\Bugzilla\Bugzilla-Metals_Project_Creation_Utility_v4\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.application
 C:\Bugzilla\Bugzilla-Metals_Project_Creation_Utility_v4\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.exe
 C:\Bugzilla\Bugzilla-Metals_Project_Creation_Utility_v4\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\Metals Project Creation Tool.exe.config
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\Metals Project Creation Tool.exe.manifest
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\Metals Project Creation Tool.application
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\Metals Project Creation Tool.exe
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\Metals Project Creation Tool.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals_Bugzilla_Project_Creator.csproj.AssemblyReference.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Metals_tool.resources
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals_Project_Creation_Tool.Properties.Resources.resources
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals_Bugzilla_Project_Creator.csproj.GenerateResource.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals_Bugzilla_Project_Creator.csproj.CoreCompileInputs.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.exe.manifest
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.application
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.exe
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals Project Creation Tool.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\HtmlAgilityPack.dll
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\HtmlAgilityPack.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\bin\Release\HtmlAgilityPack.xml
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\WindowsFormsApplication1\obj\Release\Metals_Bugzilla_Project_Creator.csproj.CopyComplete
