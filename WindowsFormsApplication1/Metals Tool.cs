@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -29,6 +30,12 @@ namespace WindowsFormsApplication1
         public Metals_tool()
         {
             InitializeComponent();
+            checkedListBox_DriveComp.Enabled = false;
+            checkedListBox_RequistComp.Enabled = false;
+            checkBox_RequistComp.Enabled = false;
+            checkBox_DriveComp.Enabled = false;
+            
+
         }
 
 
@@ -57,6 +64,107 @@ namespace WindowsFormsApplication1
                 _ = MessageBox.Show("Email List has been update successfully! Proceed?", "Succes!");
             }
         }
+
+        private void comboBox_ProjMan_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_ProjMan);
+            }
+            else if (string.IsNullOrEmpty(comboBox_ProjMan.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_ProjMan);
+            }
+        }
+
+        private void comboBox_SWEngineer_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_SWEngineer);
+            }
+            else if (string.IsNullOrEmpty(comboBox_SWEngineer.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_SWEngineer);
+            }
+        }
+
+
+
+        private void comboBox_HWEngineer_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_HWEngineer);
+            }
+            else if (string.IsNullOrEmpty(comboBox_HWEngineer.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_HWEngineer);
+            }
+        }
+
+        private void comboBox_ContEng_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_ContEng);
+            }
+            else if (string.IsNullOrEmpty(comboBox_ContEng.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_ContEng);
+            }
+        }
+
+        private void comboBox_HMIEng_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_HMIEng);
+            }
+            else if (string.IsNullOrEmpty(comboBox_HMIEng.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_HMIEng);
+            }
+        }
+
+
+        private void comboBox_AppEng_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_AppEng);
+            }
+            else if (string.IsNullOrEmpty(comboBox_AppEng.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_AppEng);
+            }
+        }
+
+        private void comboBox_CompTech_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_CompTech);
+            }
+            else if (string.IsNullOrEmpty(comboBox_CompTech.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_CompTech);
+            }
+        }
+
+        private void comboBox_DriveEng_TextChanged(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+            {// Handle printable characters (letters, numbers, symbols, punctuation).             
+                comboBox_get_emails(comboBox_DriveEng);
+            }
+            else if (string.IsNullOrEmpty(comboBox_DriveEng.Text))
+            {//Hide the dropdown when there's no input.
+                comboBox_clear_emails(comboBox_DriveEng);
+            }
+        }
+
+
 
 
 
@@ -487,7 +595,7 @@ namespace WindowsFormsApplication1
 
 
 
-                if (HMI_Engineer == "" || AppEngineer == "" || username == "" || password == "" || projectname == "" || projectManager == "" || DrvEngineer == "" || HWengineer == "" || SWengineer == "" || SysEngineer == "" || CompTech == "" || projectDescription == "" || typeRequisit.Checked)
+                if (HMI_Engineer == "" || AppEngineer == "" || username == "" || password == "" || projectname == "" || projectManager == "" || DrvEngineer == "" || HWengineer == "" || SWengineer == "" || SysEngineer == "" || CompTech == "" || projectDescription == "" || radioButton_Yes.Checked)
                 {
                     // do something
                     MessageBox.Show("Please fill out all the fields", "Friendly reminder!");
@@ -684,7 +792,7 @@ namespace WindowsFormsApplication1
                     }
 
                     // Begins the creation of all components common to any Metals project if this is not a Requisition Project
-                    if (typeRequisit.Checked == false)
+                    if (radioButton_Yes.Checked == false)
                     {
 
                         this.progressBar1.Increment(10);
@@ -796,7 +904,7 @@ namespace WindowsFormsApplication1
                     }
 
                     // Components created if the Project is created as "Drive Only" first.
-                    if (typeRequisit.Checked == true)
+                    if (radioButton_Yes.Checked == true)
                     {
 
                         // Add component: Drive Software 
@@ -962,30 +1070,95 @@ namespace WindowsFormsApplication1
             return cookies;
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void Metals_tool_Load(object sender, EventArgs e)
         {
+           
+
+
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        
+
+        
+        private void radioButton_Yes_CheckChanged(object sender, EventArgs e)
         {
 
+            checkBox_RequistComp.Enabled = true;
+            checkBox_DriveComp.Enabled = false;
+
+            checkedListBox_DriveComp.Enabled = false;
+            checkedListBox_RequistComp.Enabled = true;
+           
+            for (int i = 0; i < checkedListBox_DriveComp.Items.Count; i++)
+            {
+                checkedListBox_DriveComp.SetItemChecked(i, false);
+            }
+
+        }
+        private void radio_No_CheckChanged(object sender, EventArgs e)
+        {
+            checkBox_RequistComp.Enabled = false;
+            checkBox_DriveComp.Enabled = true;
+
+            checkedListBox_DriveComp.Enabled = true;
+            checkedListBox_RequistComp.Enabled = false;
+
+            for (int i = 0; i < checkedListBox_RequistComp.Items.Count; i++)
+            {
+                checkedListBox_RequistComp.SetItemChecked(i, false);
+            }
+
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox_DriveComp_CheckedChanged(object sender, EventArgs e)
+        {
+           
+            for( int i = 0; i < checkedListBox_DriveComp.Items.Count; i++)
+            {
+                checkedListBox_DriveComp.SetItemChecked(i, true);
+            }
+
+
+
+        }
+        private void checkBox_RequistComp_CheckedChange(object sender, EventArgs e)
         {
 
-        }
+            for (int i = 0; i < checkedListBox_RequistComp.Items.Count; i++)
+            {
+                checkedListBox_RequistComp.SetItemChecked(i, true);
+            }
 
-        private void typeRequisit_CheckedChanged(object sender, EventArgs e)
+
+        }
+        private void DriveComp_itemClick(object sender, ItemCheckEventArgs e)
         {
-
+            for (int i = 0; i < checkedListBox_DriveComp.Items.Count; i++)
+            {
+                if (e.NewValue == CheckState.Unchecked)
+                {
+                    checkBox_DriveComp.Checked = false;
+                    checkBox_DriveComp.Refresh();
+                    break;
+                }
+            }
         }
+        private void RequistComp_itemClick(object sender, ItemCheckEventArgs e)
+        {
+            for (int i = 0; i < checkedListBox_DriveComp.Items.Count; i++)
+            {
+                if (e.NewValue == CheckState.Unchecked)
+                {
+                    checkBox_RequistComp.Checked = false;
+                    checkBox_RequistComp.Refresh();
+                    break;
+                }
+            }
+        }
+
 
 
 

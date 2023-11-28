@@ -49,7 +49,6 @@ namespace WindowsFormsApplication1
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.typeRequisit = new System.Windows.Forms.RadioButton();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -74,10 +73,11 @@ namespace WindowsFormsApplication1
             this.comboBox_DriveEng = new System.Windows.Forms.ComboBox();
             this.checkedListBox_DriveComp = new System.Windows.Forms.CheckedListBox();
             this.checkedListBox_RequistComp = new System.Windows.Forms.CheckedListBox();
-            this.typeDrive = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
             this.radioButton_Yes = new System.Windows.Forms.RadioButton();
             this.radio_No = new System.Windows.Forms.RadioButton();
+            this.checkBox_DriveComp = new System.Windows.Forms.CheckBox();
+            this.checkBox_RequistComp = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,19 +192,6 @@ namespace WindowsFormsApplication1
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(524, 22);
             this.textBox3.TabIndex = 2;
-            // 
-            // typeRequisit
-            // 
-            this.typeRequisit.AutoSize = true;
-            this.typeRequisit.Location = new System.Drawing.Point(461, 491);
-            this.typeRequisit.Margin = new System.Windows.Forms.Padding(4);
-            this.typeRequisit.Name = "typeRequisit";
-            this.typeRequisit.Size = new System.Drawing.Size(189, 20);
-            this.typeRequisit.TabIndex = 6;
-            this.typeRequisit.TabStop = true;
-            this.typeRequisit.Text = "All RequisitionComponents";
-            this.typeRequisit.UseVisualStyleBackColor = true;
-            this.typeRequisit.CheckedChanged += new System.EventHandler(this.typeRequisit_CheckedChanged);
             // 
             // label10
             // 
@@ -353,6 +340,7 @@ namespace WindowsFormsApplication1
             this.comboBox_ProjMan.Name = "comboBox_ProjMan";
             this.comboBox_ProjMan.Size = new System.Drawing.Size(197, 24);
             this.comboBox_ProjMan.TabIndex = 20;
+            this.comboBox_ProjMan.KeyPress += comboBox_ProjMan_TextChanged;
             // 
             // comboBox_SWEngineer
             // 
@@ -361,6 +349,7 @@ namespace WindowsFormsApplication1
             this.comboBox_SWEngineer.Name = "comboBox_SWEngineer";
             this.comboBox_SWEngineer.Size = new System.Drawing.Size(197, 24);
             this.comboBox_SWEngineer.TabIndex = 21;
+            this.comboBox_SWEngineer.KeyPress += comboBox_SWEngineer_TextChanged;
             // 
             // comboBox_HWEngineer
             // 
@@ -369,6 +358,7 @@ namespace WindowsFormsApplication1
             this.comboBox_HWEngineer.Name = "comboBox_HWEngineer";
             this.comboBox_HWEngineer.Size = new System.Drawing.Size(198, 24);
             this.comboBox_HWEngineer.TabIndex = 22;
+            this.comboBox_HWEngineer.KeyPress += comboBox_HWEngineer_TextChanged;
             // 
             // comboBox_ContEng
             // 
@@ -377,6 +367,7 @@ namespace WindowsFormsApplication1
             this.comboBox_ContEng.Name = "comboBox_ContEng";
             this.comboBox_ContEng.Size = new System.Drawing.Size(199, 24);
             this.comboBox_ContEng.TabIndex = 23;
+            this.comboBox_ContEng.KeyPress += comboBox_ContEng_TextChanged;
             // 
             // comboBox_HMIEng
             // 
@@ -385,6 +376,7 @@ namespace WindowsFormsApplication1
             this.comboBox_HMIEng.Name = "comboBox_HMIEng";
             this.comboBox_HMIEng.Size = new System.Drawing.Size(199, 24);
             this.comboBox_HMIEng.TabIndex = 24;
+            this.comboBox_HMIEng.KeyPress += comboBox_HMIEng_TextChanged;
             // 
             // comboBox_AppEng
             // 
@@ -393,6 +385,7 @@ namespace WindowsFormsApplication1
             this.comboBox_AppEng.Name = "comboBox_AppEng";
             this.comboBox_AppEng.Size = new System.Drawing.Size(199, 24);
             this.comboBox_AppEng.TabIndex = 25;
+            this.comboBox_AppEng.KeyPress += comboBox_AppEng_TextChanged;
             // 
             // comboBox_CompTech
             // 
@@ -401,6 +394,7 @@ namespace WindowsFormsApplication1
             this.comboBox_CompTech.Name = "comboBox_CompTech";
             this.comboBox_CompTech.Size = new System.Drawing.Size(200, 24);
             this.comboBox_CompTech.TabIndex = 26;
+            this.comboBox_CompTech.KeyPress += comboBox_CompTech_TextChanged;
             // 
             // comboBox_DriveEng
             // 
@@ -409,6 +403,8 @@ namespace WindowsFormsApplication1
             this.comboBox_DriveEng.Name = "comboBox_DriveEng";
             this.comboBox_DriveEng.Size = new System.Drawing.Size(199, 24);
             this.comboBox_DriveEng.TabIndex = 27;
+            this.comboBox_DriveEng.KeyPress += comboBox_DriveEng_TextChanged;
+
             // 
             // checkedListBox_DriveComp
             // 
@@ -431,6 +427,7 @@ namespace WindowsFormsApplication1
             this.checkedListBox_DriveComp.Name = "checkedListBox_DriveComp";
             this.checkedListBox_DriveComp.Size = new System.Drawing.Size(207, 106);
             this.checkedListBox_DriveComp.TabIndex = 28;
+            this.checkedListBox_DriveComp.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.DriveComp_itemClick);
             // 
             // checkedListBox_RequistComp
             // 
@@ -446,18 +443,7 @@ namespace WindowsFormsApplication1
             this.checkedListBox_RequistComp.Name = "checkedListBox_RequistComp";
             this.checkedListBox_RequistComp.Size = new System.Drawing.Size(207, 106);
             this.checkedListBox_RequistComp.TabIndex = 29;
-            // 
-            // typeDrive
-            // 
-            this.typeDrive.AutoSize = true;
-            this.typeDrive.Location = new System.Drawing.Point(172, 491);
-            this.typeDrive.Name = "typeDrive";
-            this.typeDrive.Size = new System.Drawing.Size(157, 20);
-            this.typeDrive.TabIndex = 30;
-            this.typeDrive.TabStop = true;
-            this.typeDrive.Text = "All Drive Components";
-            this.typeDrive.UseVisualStyleBackColor = true;
-            this.typeDrive.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.checkedListBox_RequistComp.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.RequistComp_itemClick);
             // 
             // label6
             // 
@@ -478,6 +464,7 @@ namespace WindowsFormsApplication1
             this.radioButton_Yes.TabStop = true;
             this.radioButton_Yes.Text = "Yes";
             this.radioButton_Yes.UseVisualStyleBackColor = true;
+            this.radioButton_Yes.CheckedChanged += new System.EventHandler(this.radioButton_Yes_CheckChanged);
             // 
             // radio_No
             // 
@@ -489,6 +476,29 @@ namespace WindowsFormsApplication1
             this.radio_No.TabStop = true;
             this.radio_No.Text = "No";
             this.radio_No.UseVisualStyleBackColor = true;
+            this.radio_No.CheckedChanged += new System.EventHandler(this.radio_No_CheckChanged);
+            // 
+            // checkBox_DriveComp
+            // 
+            this.checkBox_DriveComp.AutoSize = true;
+            this.checkBox_DriveComp.Location = new System.Drawing.Point(172, 495);
+            this.checkBox_DriveComp.Name = "checkBox_DriveComp";
+            this.checkBox_DriveComp.Size = new System.Drawing.Size(158, 20);
+            this.checkBox_DriveComp.TabIndex = 34;
+            this.checkBox_DriveComp.Text = "All Drive Components";
+            this.checkBox_DriveComp.UseVisualStyleBackColor = true;
+            this.checkBox_DriveComp.CheckedChanged += new System.EventHandler(this.checkBox_DriveComp_CheckedChanged);
+            // 
+            // checkBox_RequistComp
+            // 
+            this.checkBox_RequistComp.AutoSize = true;
+            this.checkBox_RequistComp.Location = new System.Drawing.Point(461, 494);
+            this.checkBox_RequistComp.Name = "checkBox_RequistComp";
+            this.checkBox_RequistComp.Size = new System.Drawing.Size(175, 20);
+            this.checkBox_RequistComp.TabIndex = 35;
+            this.checkBox_RequistComp.Text = "All Requisit Components";
+            this.checkBox_RequistComp.UseVisualStyleBackColor = true;
+            this.checkBox_RequistComp.CheckedChanged += new System.EventHandler(this.checkBox_RequistComp_CheckedChange);
             // 
             // Metals_tool
             // 
@@ -497,10 +507,11 @@ namespace WindowsFormsApplication1
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(752, 952);
+            this.Controls.Add(this.checkBox_RequistComp);
+            this.Controls.Add(this.checkBox_DriveComp);
             this.Controls.Add(this.radio_No);
             this.Controls.Add(this.radioButton_Yes);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.typeDrive);
             this.Controls.Add(this.checkedListBox_RequistComp);
             this.Controls.Add(this.checkedListBox_DriveComp);
             this.Controls.Add(this.comboBox_DriveEng);
@@ -517,7 +528,6 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.label17);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.typeRequisit);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
@@ -541,7 +551,7 @@ namespace WindowsFormsApplication1
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Metals_tool";
-            this.Text = "MH_tool";
+            this.Text = "Metals Tool";
             this.Load += new System.EventHandler(this.Metals_tool_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -562,7 +572,6 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.RadioButton typeRequisit;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label11;
@@ -587,10 +596,11 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.ComboBox comboBox_DriveEng;
         private System.Windows.Forms.CheckedListBox checkedListBox_DriveComp;
         private System.Windows.Forms.CheckedListBox checkedListBox_RequistComp;
-        private System.Windows.Forms.RadioButton typeDrive;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RadioButton radioButton_Yes;
         private System.Windows.Forms.RadioButton radio_No;
+        private System.Windows.Forms.CheckBox checkBox_DriveComp;
+        private System.Windows.Forms.CheckBox checkBox_RequistComp;
         //private System.Windows.Forms.Button button1;
         //private System.Windows.Forms.Button button2;
     }
