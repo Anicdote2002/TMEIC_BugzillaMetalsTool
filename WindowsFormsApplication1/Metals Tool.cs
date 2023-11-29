@@ -9,16 +9,29 @@
 
 
 
-using HtmlAgilityPack;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.IO;
+using System.Net;
+using System.Collections.Specialized;
+using System.Web;
+using System.Xml;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Security.Policy;
+using HtmlAgilityPack;
+using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Diagnostics.Eventing.Reader;
 
 namespace WindowsFormsApplication1
 {
@@ -61,11 +74,11 @@ namespace WindowsFormsApplication1
         {
             if (get_users_email())
             {
-                _ = MessageBox.Show("Email List has been update successfully! Proceed?", "Succes!");
+                MessageBox.Show("Email List has been updated successfully! Proceed?", "Succes!");
             }
         }
 
-        private void comboBox_ProjMan_TextChanged(object sender, KeyPressEventArgs e)
+        private void comboBox_ProjMain_TextChanged(object sender, KeyPressEventArgs e)
         {
             if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
             {// Handle printable characters (letters, numbers, symbols, punctuation).             
@@ -77,29 +90,29 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void comboBox_SWEngineer_TextChanged(object sender, KeyPressEventArgs e)
+        private void comboBox_System_Engineer_TextChanged(object sender, KeyPressEventArgs e)
         {
             if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
             {// Handle printable characters (letters, numbers, symbols, punctuation).             
-                comboBox_get_emails(comboBox_SWEngineer);
+                comboBox_get_emails(comboBox_SystemEngineer);
             }
-            else if (string.IsNullOrEmpty(comboBox_SWEngineer.Text))
+            else if (string.IsNullOrEmpty(comboBox_SystemEngineer.Text))
             {//Hide the dropdown when there's no input.
-                comboBox_clear_emails(comboBox_SWEngineer);
+                comboBox_clear_emails(comboBox_SystemEngineer);
             }
         }
 
 
 
-        private void comboBox_HWEngineer_TextChanged(object sender, KeyPressEventArgs e)
+        private void comboBox_Hardware_Engineer_TextChanged(object sender, KeyPressEventArgs e)
         {
             if (char.IsLetterOrDigit(e.KeyChar) || char.IsSymbol(e.KeyChar) || char.IsPunctuation(e.KeyChar))
             {// Handle printable characters (letters, numbers, symbols, punctuation).             
-                comboBox_get_emails(comboBox_HWEngineer);
+                comboBox_get_emails(comboBox_HardwareEngineer);
             }
-            else if (string.IsNullOrEmpty(comboBox_HWEngineer.Text))
+            else if (string.IsNullOrEmpty(comboBox_HardwareEngineer.Text))
             {//Hide the dropdown when there's no input.
-                comboBox_clear_emails(comboBox_HWEngineer);
+                comboBox_clear_emails(comboBox_HardwareEngineer);
             }
         }
 
@@ -165,24 +178,6 @@ namespace WindowsFormsApplication1
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void comboBox_get_emails(System.Windows.Forms.ComboBox combobox)
         {
 
@@ -211,7 +206,7 @@ namespace WindowsFormsApplication1
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
-            string url = "https://tools.tmeic.com/mh/editusers.cgi?action=list&matchvalue=login_name&matchstr=&matchtype=substr&groupid=1&is_enabled=1";
+            string url = "https://tools.tmeic.com/metals/editusers.cgi?action=list&matchvalue=login_name&matchstr=&matchtype=substr&groupid=1&is_enabled=1";
             string loginToken;
             string email_cookies;
             string response;
@@ -384,25 +379,22 @@ namespace WindowsFormsApplication1
         }
 
 
-
-
-
-
-
         private bool CreateProject()
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
             string projectname = textBox3.Text;
-            string projectManager = comboBox_ProjMan.Text;
-            string HWengineer = comboBox_HWEngineer.Text;
-            string SWengineer = comboBox_SWEngineer.Text;
             string projectDescription = textBox7.Text;
+         
+            string projectManager = comboBox_ProjMan.Text;
+            string System_Engineer = comboBox_SystemEngineer.Text;
+            string Hardware_Engineer = comboBox_HardwareEngineer.Text;
+            string Control_Engineer = comboBox_ContEng.Text;
             string HMI_Engineer = comboBox_HMIEng.Text;
             string AppEngineer = comboBox_AppEng.Text;
-            string SysEngineer = comboBox_ContEng.Text;
             string CompTech = comboBox_CompTech.Text;
             string DrvEngineer = comboBox_DriveEng.Text;
+
 
             string FE_Manager;
             string HW_Manager;
@@ -425,6 +417,26 @@ namespace WindowsFormsApplication1
             //Mergiing of button2_click
             string response;
             string url = "https://tools.tmeic.com/metals/editproducts.cgi?action=add&classification=Metals%20Projects";
+
+            
+            
+            //string xmlFilePath = "ProjectEmail.xml"; // Replace with your actual XML file path
+            //// Get the full path of the XML file
+            //string fullPath = Path.GetFullPath(xmlFilePath);
+
+            //Console.WriteLine("Full path of the XML file: " + fullPath);
+
+            //// Load the XML document
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.Load(fullPath);
+
+            //// Now you can perform operations on the XML document as needed
+            //// ...
+
+            //// Example: Print the XML content
+            //Console.WriteLine("XML Content:");
+            //Console.WriteLine(xmlDoc.OuterXml);
+
 
 
             if (password == "")
@@ -449,18 +461,15 @@ namespace WindowsFormsApplication1
                 System.Xml.XmlDocument Doc = new System.Xml.XmlDocument();
                 Doc.Load(@"ProjectEmail.xml");
 
-
-
-
-
-
                 XmlNode curNode = Doc.SelectSingleNode("Configuration/FieldEngineerManager");
+              
                 if (curNode == null)
                 {
                     MessageBox.Show("Problem with ProjectEmail.xml/Configuration/FieldEngineerManager");
                     return false;
                 }
                 FE_Manager = curNode.InnerText;
+                Console.WriteLine(FE_Manager);
 
                 curNode = Doc.SelectSingleNode("Configuration/HardwareManager");
                 if (curNode == null)
@@ -469,6 +478,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 HW_Manager = curNode.InnerText;
+                Console.WriteLine(HW_Manager);
 
                 curNode = Doc.SelectSingleNode("Configuration/SoftwareManager");
                 if (curNode == null)
@@ -477,6 +487,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 SW_Manager = curNode.InnerText;
+                Console.WriteLine(SW_Manager);
 
                 curNode = Doc.SelectSingleNode("Configuration/CrainDirectorOwner");
                 if (curNode == null)
@@ -485,6 +496,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 Crane_Dir_Owner = curNode.InnerText;
+                Console.WriteLine(Crane_Dir_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/WarrantyUser");
                 if (curNode == null)
@@ -493,6 +505,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 Warranty_User = curNode.InnerText;
+                Console.WriteLine(Warranty_User);
 
                 curNode = Doc.SelectSingleNode("Configuration/MPROwner");
                 if (curNode == null)
@@ -501,6 +514,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 MPR_Owner = curNode.InnerText;
+                Console.WriteLine(MPR_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/MaxViewRT");
                 if (curNode == null)
@@ -509,6 +523,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 MaxviewRT_Owner = curNode.InnerText;
+                Console.WriteLine(MaxviewRT_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/VOIPOwner");
                 if (curNode == null)
@@ -517,6 +532,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 VOIP_Owner = curNode.InnerText;
+                Console.WriteLine(VOIP_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/SPLCOwner");
                 if (curNode == null)
@@ -525,6 +541,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 SPLC_Owner = curNode.InnerText;
+                Console.WriteLine(SPLC_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/MaxviewQCOwner");
                 if (curNode == null)
@@ -533,6 +550,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 Maxview_QC_Owner = curNode.InnerText;
+                Console.WriteLine(Maxview_QC_Owner);
 
                 curNode = Doc.SelectSingleNode("Configuration/Cookies");
                 if (curNode == null)
@@ -541,6 +559,7 @@ namespace WindowsFormsApplication1
                     return false;
                 }
                 cookies = curNode.InnerText;
+                Console.WriteLine(cookies);
 
                 curNode = Doc.SelectSingleNode("Configuration/LoginToken");
                 /*
@@ -566,7 +585,7 @@ namespace WindowsFormsApplication1
                 projectDescription = Encoder(projectDescription);
 
                 // Checking username formate
-                if (!username.Contains("@") || !projectManager.Contains("@") || !HWengineer.Contains("@") || !SWengineer.Contains("@") || !AppEngineer.Contains("@") || !HMI_Engineer.Contains("@") || !FE_Manager.Contains("@") || !HW_Manager.Contains("@") || !SW_Manager.Contains("@") || !Crane_Dir_Owner.Contains("@") || !Warranty_User.Contains("@") || !MPR_Owner.Contains("@") || !MaxviewRT_Owner.Contains("@") || !VOIP_Owner.Contains("@") || !SPLC_Owner.Contains("@") || !Maxview_QC_Owner.Contains("@"))
+                if (!username.Contains("@") || !projectManager.Contains("@") || !Hardware_Engineer.Contains("@") || !System_Engineer.Contains("@") || !AppEngineer.Contains("@") || !HMI_Engineer.Contains("@") || !FE_Manager.Contains("@") || !HW_Manager.Contains("@") || !SW_Manager.Contains("@") || !Crane_Dir_Owner.Contains("@") || !Warranty_User.Contains("@") || !MPR_Owner.Contains("@") || !MaxviewRT_Owner.Contains("@") || !VOIP_Owner.Contains("@") || !SPLC_Owner.Contains("@") || !Maxview_QC_Owner.Contains("@"))
                 {
                     MessageBox.Show("Make sure that the entered usernames and those in the ProjectEmail.xml file are of the form 'first.last@tmeic.com' or are correct", "Friendly reminder!");
                     return false;
@@ -574,11 +593,11 @@ namespace WindowsFormsApplication1
                 // Replace @ with %40 and make sure it is lower case
                 username = username.Replace("@", "%40").ToLower();
                 projectManager = projectManager.Replace("@", "%40").ToLower();
-                HWengineer = HWengineer.Replace("@", "%40").ToLower();
-                SWengineer = SWengineer.Replace("@", "%40").ToLower();
+                Hardware_Engineer = Hardware_Engineer.Replace("@", "%40").ToLower();
+                System_Engineer = System_Engineer.Replace("@", "%40").ToLower();
                 AppEngineer = AppEngineer.Replace("@", "%40").ToLower();
                 HMI_Engineer = HMI_Engineer.Replace("@", "%40").ToLower();
-                SysEngineer = SysEngineer.Replace("@", "%40").ToLower();
+                Control_Engineer = Control_Engineer.Replace("@", "%40").ToLower();
                 CompTech = CompTech.Replace("@", "%40").ToLower();
                 DrvEngineer = DrvEngineer.Replace("@", "%40").ToLower();
 
@@ -595,9 +614,8 @@ namespace WindowsFormsApplication1
 
 
 
-                if (HMI_Engineer == "" || AppEngineer == "" || username == "" || password == "" || projectname == "" || projectManager == "" || DrvEngineer == "" || HWengineer == "" || SWengineer == "" || SysEngineer == "" || CompTech == "" || projectDescription == "" || radioButton_Yes.Checked)
-                {
-                    // do something
+                if (HMI_Engineer == "" || AppEngineer == "" || username == "" || password == "" || projectname == "" || projectManager == "" || DrvEngineer == "" || Hardware_Engineer == "" || System_Engineer == "" || Control_Engineer == "" || CompTech == "" || projectDescription == "")
+                {  // do something
                     MessageBox.Show("Please fill out all the fields", "Friendly reminder!");
                     return false;
                 }
@@ -693,6 +711,7 @@ namespace WindowsFormsApplication1
                             else if (response.Contains("<title>Confirm Match</title>"))
                             {
                                 MessageBox.Show("Failed to match entered engineer email. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error");
+                                Console.WriteLine("Hey you failed at line 690");
                                 return false;
                             }
                             else if (response.Contains("<title>Untrusted Authentication Request</title>"))
@@ -708,6 +727,7 @@ namespace WindowsFormsApplication1
                             else if (response.Contains("<title>Match Failed</title>"))
                             {
                                 MessageBox.Show("Failed to match one or more of the input engineer emails. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error!");
+                                Console.WriteLine("Hey you failed at line 706");
                                 return false;
                             }
                             else if (response.Contains("<title>Authorization Required</title>"))
@@ -733,7 +753,7 @@ namespace WindowsFormsApplication1
                         getToken = wb.UploadString(urlAddProject, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
 
 
-                        Console.WriteLine(getToken);
+                       // Console.WriteLine(getToken);
                         if (getToken.Contains("<title>Invalid Username Or Password</title>"))
                         {
                             MessageBox.Show("Invalid Username Or Password.", "Warning!");
@@ -753,16 +773,44 @@ namespace WindowsFormsApplication1
                         token = FindToken(getToken);
                         component = "General%2FSystems";
                         componentComment = "Other+System+or+multicomponent+issues";
-                        response = wb.UploadString(urlAddProject, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&product=" + projectname + "&description=" + projectDescription + "&is_active=1&allows_unconfirmed=on&version=unspecified&createseries=1&component=" + component + "&comp_desc=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + CompTech + "%2C+" + DrvEngineer + "%2C+" + SWengineer + "%2C+" + HWengineer + "%2C+" + projectManager + "%2C+" + AppEngineer + "%2C+" + HMI_Engineer + "%2C+" + FE_Manager + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + Warranty_User + "%2C+" + "&action=new&token=" + token + "&classification=Metals+Projects");
+                        response = wb.UploadString(urlAddProject, "POST", "Bugzilla_login="
+                                                    + username + "&Bugzilla_password="
+                                                    + password + "&Bugzilla_login_token="
+                                                    + loginToken + "&product="
+                                                    + projectname + "&description="
+                                                    + projectDescription + "&is_active=1&allows_unconfirmed=on&version=unspecified&createseries=1&component="
+                                                    + component + "&comp_desc="
+                                                    + componentComment + "&initialowner="
+                                                    + Control_Engineer + "&initialcc="
+                                                    + CompTech + "%2C+"
+                                                    + DrvEngineer + "%2C+"
+                                                    + System_Engineer + "%2C+"
+                                                    + Hardware_Engineer + "%2C+"
+                                                    + projectManager + "%2C+"
+                                                    + AppEngineer + "%2C+"
+                                                    + HMI_Engineer + "%2C+"
+                                                    + FE_Manager + "%2C+"
+                                                    + HW_Manager + "%2C+"
+                                                    + SW_Manager + "%2C+"
+                                                    + Crane_Dir_Owner + "%2C+"
+                                                    + Warranty_User + "%2C+"
+                                                    + MPR_Owner + "%2C+"
+                                                    + MaxviewRT_Owner + "%2C+"
+                                                    + SPLC_Owner + "%2C+"
+                                                    + Maxview_QC_Owner + "%2C+" + "&action=new&token="
+                                                    + token + "&classification=Metals+Projects");
 
                         if (response.Contains("<title>Match Failed</title>"))
                         {
+                            Console.WriteLine(response);
                             MessageBox.Show("Failed to match one or more of the input engineer emails. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error!");
+                            Console.WriteLine("Match Failed");
                             return false;
                         }
                         if (response.Contains("<title>Confirm Match</title>"))
                         {
                             MessageBox.Show("Failed to match entered engineer email. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error");
+                            Console.WriteLine("Confirm Match");
                             return false;
                         }
                         if (response.Contains("<title>Untrusted Authentication Request</title>"))
@@ -783,7 +831,7 @@ namespace WindowsFormsApplication1
                         componentComment = "Other+System+or+multicomponent+issues";
                         getToken = wb.UploadString("https://tools.tmeic.com/metals/editcomponents.cgi?action=edit&product=" + projectname + "&component=General%2FSystems", "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
                         token = FindToken(getToken);
-                        response = wb.UploadString("https://tools.tmeic.com/metals/editcomponents.cgi?action=edit&product=" + projectname + "&component=General%2FSystems", "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=General%2FSystems&description=Other+System+or+multicomponent+issues&initialowner=" + DrvEngineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + CompTech + "%2C+" + HWengineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + projectManager + "%2C+" + FE_Manager + "&isactive=1&action=update&componentold=General%2FSystems&product=" + projectname + "&token=" + token);
+                        response = wb.UploadString("https://tools.tmeic.com/metals/editcomponents.cgi?action=edit&product=" + projectname + "&component=General%2FSystems", "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=General%2FSystems&description=Other+System+or+multicomponent+issues&initialowner=" + DrvEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + CompTech + "%2C+" + Hardware_Engineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + projectManager + "%2C+" + FE_Manager + "&isactive=1&action=update&componentold=General%2FSystems&product=" + projectname + "&token=" + token);
 
                     }
                     catch (Exception ex)
@@ -792,178 +840,397 @@ namespace WindowsFormsApplication1
                     }
 
                     // Begins the creation of all components common to any Metals project if this is not a Requisition Project
-                    if (radioButton_Yes.Checked == false)
+                    if ((radioButton_Yes.Checked == false) && (radio_No.Checked == true))
                     {
 
-                        this.progressBar1.Increment(10);
-                        // Add component: Hardware  ------------ Every project gets Hardware 
-                        component = "General+Hardware";
-                        componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        if (getToken.Contains("<title>Product Access Denied</title>"))
+                       if (checkBox_DriveComp.Checked == true)
                         {
-                            MessageBox.Show("Something When wrong");
-                            return false;
+                            this.progressBar1.Increment(10);
+                            // Add component: Hardware  ------------ Every project gets Hardware 
+                            component = "General+Hardware";
+                            componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            if (getToken.Contains("<title>Product Access Denied</title>"))
+                            {
+                                MessageBox.Show("Something went wrong");
+                                return false;
+                            }
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + AppEngineer + "%2C+" + Hardware_Engineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: Application Engineering 
+                            component = "Application+Engineering";
+                            componentComment = "General+Application+Related+Issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+
+                            // Add component: General Software 
+                            component = "General+Software";
+                            componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: L1 Software 
+                            component = "L1+Software";
+                            componentComment = "General+L1+Software+Issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+
+                            // Add component: L2 Software 
+                            component = "L2+Software";
+                            componentComment = "General+L2+Software+Issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: Drive Hardware 
+                            component = "Drive+Hardware";
+                            componentComment = "Issues+related+to+Drive+Hardware";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: Drive Software 
+                            component = "Drive+Software";
+                            componentComment = "Issues+related+to+Drive+Software+files";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+
+                            // Add component: L1 HMI Project 
+                            component = "L1+HMI+Project";
+                            componentComment = "General+L1+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + HMI_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: L1 HMI Screens 
+                            component = "L1+HMI+Screens";
+                            componentComment = "General+L1+HMI+screens+related+issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: L2 HMI Project 
+                            component = "L2+HMI+Project";
+                            componentComment = "General+L2+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + HMI_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: L2 HMI Screens 
+                            component = "L2+HMI+Screens";
+                            componentComment = "General+L2+HMI+screens+related+issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: Models 
+                            component = "General+Models+Issues";
+                            componentComment = "General+Mathematical+Models+related+issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + CompTech + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+
+                            // Add component: Elementaries 
+                            component = "Elementaries";
+                            componentComment = "General+issues+involving+elementary+drawings";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
                         }
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + AppEngineer + "%2C+" + HWengineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                        else if (checkBox_DriveComp.Checked == false)
+                        {
+                            if(checkedListBox_DriveComp.GetItemChecked(0))
+                            {
+                                this.progressBar1.Increment(10);
+                                // Add component: Hardware  ------------ Every project gets Hardware 
+                                component = "General+Hardware";
+                                componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                if (getToken.Contains("<title>Product Access Denied</title>"))
+                                {
+                                    MessageBox.Show("Something went wrong");
+                                    return false;
+                                }
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + AppEngineer + "%2C+" + Hardware_Engineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(1))
+                            {
+                                // Add component: Application Engineering 
+                                component = "Application+Engineering";
+                                componentComment = "General+Application+Related+Issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
 
-                        // Add component: Application Engineering 
-                        component = "Application+Engineering";
-                        componentComment = "General+Application+Related+Issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(2))
+                            {
+                                // Add component: General Software 
+                                component = "General+Software";
+                                componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
 
-                        // Add component: General Software 
-                        component = "General+Software";
-                        componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(3))
+                            {
+                                // Add component: L1 Software 
+                                component = "L1+Software";
+                                componentComment = "General+L1+Software+Issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
 
-                        // Add component: L1 Software 
-                        component = "L1+Software";
-                        componentComment = "General+L1+Software+Issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
 
-                        // Add component: L2 Software 
-                        component = "L2+Software";
-                        componentComment = "General+L2+Software+Issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(4))
+                            {
+                                // Add component: L2 Software 
+                                component = "L2+Software";
+                                componentComment = "General+L2+Software+Issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(5))
+                            {
 
-                        // Add component: Drive Hardware 
-                        component = "Drive+Hardware";
-                        componentComment = "Issues+related+to+Drive+Hardware";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                                // Add component: Drive Hardware 
+                                component = "Drive+Hardware";
+                                componentComment = "Issues+related+to+Drive+Hardware";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(6))
+                            {
+                                // Add component: Drive Software 
+                                component = "Drive+Software";
+                                componentComment = "Issues+related+to+Drive+Software+files";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
 
-                        // Add component: Drive Software 
-                        component = "Drive+Software";
-                        componentComment = "Issues+related+to+Drive+Software+files";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + HW_Manager + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(7))
+                            {
+                                // Add component: L1 HMI Project 
+                                component = "L1+HMI+Project";
+                                componentComment = "General+L1+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + HMI_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
 
-                        // Add component: L1 HMI Project 
-                        component = "L1+HMI+Project";
-                        componentComment = "General+L1+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + HMI_Engineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
 
-                        // Add component: L1 HMI Screens 
-                        component = "L1+HMI+Screens";
-                        componentComment = "General+L1+HMI+screens+related+issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(8))
+                            {
+                                // Add component: L1 HMI Screens 
+                                component = "L1+HMI+Screens";
+                                componentComment = "General+L1+HMI+screens+related+issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
 
-                        // Add component: L2 HMI Project 
-                        component = "L2+HMI+Project";
-                        componentComment = "General+L2+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + HMI_Engineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(9))
+                            {
 
-                        // Add component: L2 HMI Screens 
-                        component = "L2+HMI+Screens";
-                        componentComment = "General+L2+HMI+screens+related+issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                                // Add component: L2 HMI Project 
+                                component = "L2+HMI+Project";
+                                componentComment = "General+L2+HMI+project+related+issues+including+points,+alarms,+events,+scripts,+devices,+ports,+users,+roles,+resources,+database+logger,+documentation,+drawings+index,+and+HMI+config+files";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + HMI_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
 
-                        // Add component: Models 
-                        component = "General+Models+Issues";
-                        componentComment = "General+Mathematical+Models+related+issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + CompTech + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(10))
+                            {
 
-                        // Add component: Elementaries 
-                        component = "Elementaries";
-                        componentComment = "General+issues+involving+elementary+drawings";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                                // Add component: L2 HMI Screens 
+                                component = "L2+HMI+Screens";
+                                componentComment = "General+L2+HMI+screens+related+issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HMI_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(11))
+                            {
+
+                                // Add component: Models 
+                                component = "General+Models+Issues";
+                                componentComment = "General+Mathematical+Models+related+issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + CompTech + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_DriveComp.GetItemChecked(12))
+                            {
+                                // Add component: Elementaries 
+                                component = "Elementaries";
+                                componentComment = "General+issues+involving+elementary+drawings";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                        }
+                                                                                            
                     }
 
                     // Components created if the Project is created as "Drive Only" first.
-                    if (radioButton_Yes.Checked == true)
+                    else if ((radioButton_Yes.Checked == true) && (radio_No.Checked == false))
                     {
+                        if(checkBox_RequistComp.Checked == true)
+                        {
+                            // Add component: Drive Software 
+                            component = "Drive+Software";
+                            componentComment = "Issues+related+to+Drive+Software+files";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
 
-                        // Add component: Drive Software 
-                        component = "Drive+Software";
-                        componentComment = "Issues+related+to+Drive+Software+files";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            // Add component: Drive Hardware 
+                            component = "Drive+Hardware";
+                            componentComment = "Issues+related+to+Drive+Hardware";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
 
-                        // Add component: Drive Hardware 
-                        component = "Drive+Hardware";
-                        componentComment = "Issues+related+to+Drive+Hardware";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            // Add component: Elementaries 
+                            component = "Elementaries";
+                            componentComment = "General+issues+involving+elementary+drawings";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
 
-                        // Add component: Elementaries 
-                        component = "Elementaries";
-                        componentComment = "General+issues+involving+elementary+drawings";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            // Add component: Hardware  ------------ Every project gets Hardware 
+                            component = "General+Hardware";
+                            componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + AppEngineer + "%2C+" + Hardware_Engineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
 
-                        // Add component: Hardware  ------------ Every project gets Hardware 
-                        component = "General+Hardware";
-                        componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + HWengineer + "&initialcc=" + SysEngineer + "%2C+" + AppEngineer + "%2C+" + HWengineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            // Add component: Application Engineering 
+                            component = "Application+Engineering";
+                            componentComment = "General+Application+Related+Issues";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
 
-                        // Add component: Application Engineering 
-                        component = "Application+Engineering";
-                        componentComment = "General+Application+Related+Issues";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + SysEngineer + "%2C+" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            // Add component: General Software 
+                            component = "General+Software";
+                            componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
+                            getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                            token = FindToken(getToken);
+                            response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                            this.progressBar1.Increment(10);
+                        }
+                        else if(checkBox_RequistComp.Checked == false)
+                        {
+                            if(checkedListBox_RequistComp.GetItemChecked(0))
+                            {
+                                // Add component: Drive Software 
+                                component = "Drive+Software";
+                                componentComment = "Issues+related+to+Drive+Software+files";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + DrvEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
 
-                        // Add component: General Software 
-                        component = "General+Software";
-                        componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
-                        getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-                        token = FindToken(getToken);
-                        response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + SysEngineer + "&initialcc=" + SWengineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
-                        this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_RequistComp.GetItemChecked(1))
+                            {
+                                // Add component: Drive Hardware 
+                                component = "Drive+Hardware";
+                                componentComment = "Issues+related+to+Drive+Hardware";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + SW_Manager + "%2C+" + AppEngineer + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+
+                            }
+                            if (checkedListBox_RequistComp.GetItemChecked(2))
+                            {
+                                // Add component: Elementaries 
+                                component = "Elementaries";
+                                componentComment = "General+issues+involving+elementary+drawings";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + AppEngineer + "%2C+" + HW_Manager + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_RequistComp.GetItemChecked(3))
+                            {
+                                // Add component: Hardware  ------------ Every project gets Hardware 
+                                component = "General+Hardware";
+                                componentComment = "General+hardware+related+issues+including+elementary+drawings,+panels,+Circuits,+etc.";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Hardware_Engineer + "&initialcc=" + Control_Engineer + "%2C+" + AppEngineer + "%2C+" + Hardware_Engineer + "%2C+" + HW_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_RequistComp.GetItemChecked(4))
+                            {
+                                // Add component: Application Engineering 
+                                component = "Application+Engineering";
+                                componentComment = "General+Application+Related+Issues";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + AppEngineer + "&initialcc=" + Control_Engineer + "%2C+" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                            if (checkedListBox_RequistComp.GetItemChecked(5))
+                            {
+                                // Add component: General Software 
+                                component = "General+Software";
+                                componentComment = "Anything+software+related+not+dealing+with+the+PLC+or+HMI+project";
+                                getToken = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+                                token = FindToken(getToken);
+                                response = wb.UploadString(urlAddProduct + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&component=" + component + "&description=" + componentComment + "&initialowner=" + Control_Engineer + "&initialcc=" + System_Engineer + "%2C+" + FE_Manager + "%2C+" + projectManager + "&action=new&token=" + token);
+                                this.progressBar1.Increment(10);
+                            }
+                        }
+                        
 
                     }
 
                     getToken = wb.UploadString(urlEditGroupControl + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
                     token = FindToken(getToken);
                     response = wb.UploadString(urlEditGroupControl + projectname, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&action=updategroupcontrols&product=" + projectname + "&token=" + token + "&membercontrol_21=0&othercontrol_21=0&membercontrol_17=0&othercontrol_17=0&membercontrol_15=0&othercontrol_15=0&entry_16=1&membercontrol_16=3&othercontrol_16=3&membercontrol_22=0&othercontrol_22=0&submit=submit");
-
-
                 }
-
 
                 this.progressBar1.Increment(10);
                 return true;
@@ -993,7 +1260,6 @@ namespace WindowsFormsApplication1
 
             // Must be the first one.
             projectDescription = projectDescription.Replace("%", "%25");// %25 == %
-
             projectDescription = projectDescription.Replace(">", "%3E"); // %3E == >
             projectDescription = projectDescription.Replace("<", "%3C"); // %3C == <
             projectDescription = projectDescription.Replace("(", "%28");// %28 == (
@@ -1069,26 +1335,13 @@ namespace WindowsFormsApplication1
             }
             return cookies;
         }
-
-       
-
-        private void Metals_tool_Load(object sender, EventArgs e)
-        {
-           
-
-
-
-        }
-
-        
-
-        
+   
         private void radioButton_Yes_CheckChanged(object sender, EventArgs e)
         {
 
             checkBox_RequistComp.Enabled = true;
             checkBox_DriveComp.Enabled = false;
-
+        
             checkedListBox_DriveComp.Enabled = false;
             checkedListBox_RequistComp.Enabled = true;
            
@@ -1102,7 +1355,7 @@ namespace WindowsFormsApplication1
         {
             checkBox_RequistComp.Enabled = false;
             checkBox_DriveComp.Enabled = true;
-
+         
             checkedListBox_DriveComp.Enabled = true;
             checkedListBox_RequistComp.Enabled = false;
 
@@ -1112,27 +1365,19 @@ namespace WindowsFormsApplication1
             }
 
         }
-
         private void checkBox_DriveComp_CheckedChanged(object sender, EventArgs e)
-        {
-           
+        {          
             for( int i = 0; i < checkedListBox_DriveComp.Items.Count; i++)
             {
                 checkedListBox_DriveComp.SetItemChecked(i, true);
             }
-
-
-
         }
         private void checkBox_RequistComp_CheckedChange(object sender, EventArgs e)
         {
-
             for (int i = 0; i < checkedListBox_RequistComp.Items.Count; i++)
             {
                 checkedListBox_RequistComp.SetItemChecked(i, true);
             }
-
-
         }
         private void DriveComp_itemClick(object sender, ItemCheckEventArgs e)
         {
@@ -1158,119 +1403,8 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
-
-
-
-        /*
-         * private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start("notepad.exe", "ProjectEmail.xml");
-            }
-            catch
-            {
-                MessageBox.Show("Unable to open the ProjectEmail.xml from here.  Please make sure it exists in the same directory as the tool.", "Error");
-            }
-
-        }*/
-
-        /*
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string cookies;
-            string loginToken;
-            string username = textBox1.Text;
-            string password = textBox2.Text;
-            string response;
-            string url = "https://tools.tmeic.com/metals/editproducts.cgi?action=add&classification=Metals%20Projects";
-            username = username.Replace("@", "%40");
-
-            if (password == "")
-            {
-                MessageBox.Show("You must enter your Bugzilla credentials to test the cookies.", "Error!");
-                return;
-            }
-
-
-            try
-            {
-                //Load XML Document
-                try
-                {
-                    System.Xml.XmlDocument DocTest = new System.Xml.XmlDocument();
-                    DocTest.Load(@"ProjectEmail.xml");
-                }
-                catch
-                {
-                    MessageBox.Show("Please make sure that the ProjectEmail.xml file is located in the same file as this tool when it is run.", "Error");
-                    return;
-                }
-                System.Xml.XmlDocument Doc = new System.Xml.XmlDocument();
-                Doc.Load(@"ProjectEmail.xml");
-
-                XmlNode curNode = Doc.SelectSingleNode("Configuration/Cookies");
-                if (curNode == null)
-                {
-                    MessageBox.Show("Problem with ProjectEmail.xml/Configuration/Cookies");
-                    return;
-                }
-                cookies = curNode.InnerText;
-
-                curNode = Doc.SelectSingleNode("Configuration/LoginToken");
-                if (curNode == null)
-                {
-                    MessageBox.Show("Problem with ProjectEmail.xml/Configuration/LoginToken");
-                    return;
-                }
-                loginToken = curNode.InnerText;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An exception was thrown while reading the ProjectEmail.xml. Please insure that it is in the same folder as the project creation utility. ", "Error!");
-                return;
-            }
-
-            using (WebClient wb = new WebClient())
-            {
-                try
-                {
-                    wb.Headers.Add(HttpRequestHeader.Cookie, cookies);
-
-                    CredentialCache credentialCache = new CredentialCache();
-                    credentialCache.Add(new System.Uri(url), "Basic", new NetworkCredential(username, password, "tools.tmeic.com"));
-
-                    
-                    wb.Credentials = credentialCache;
-                    wb.BaseAddress = url;
-                    
-                    response = wb.UploadString(url, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
-
-                    if (response.Contains("<title>Match Failed</title>"))
-                        MessageBox.Show("Failed to match one or more of the input engineer emails. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error!");
-                    else if (response.Contains("<title>Confirm Match</title>"))
-                        MessageBox.Show("Failed to match entered engineer email. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error");
-                    else if (response.Contains("<title>Untrusted Authentication Request</title>"))
-                        MessageBox.Show("Bugzilla returned the Untrusted Authentication Request page. The Cookies or Login Tokens are invalid","Failed!");
-                    else if (response.Contains("<title>Invalid Username Or Password</title>"))
-                        MessageBox.Show("Invalid Username Or Password.");
-                    else if (response.Contains("<title>Add Product</title>"))
-                        MessageBox.Show("Successfully sent command. Cookies and Tokens are still valid.", "Success! ");                    
-                    else if (response.Contains("<title>Authorization Required</title>"))
-                        MessageBox.Show("Authorization Required. You are not an Admin!");
-                    else
-                        MessageBox.Show("Unexpected response. Unsure of success.");
-                }
-                catch
-                {
-                    MessageBox.Show("Exception thrown. Operation failed");
-                }
-            }
-        }
-        */
     }
-    public static class StringExtensions
+    public static class StringExtensions //Add the Contains function to the Strings OOP
     {
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
@@ -1279,3 +1413,112 @@ namespace WindowsFormsApplication1
         }
     }
 }
+
+
+/*
+ * private void button1_Click(object sender, EventArgs e)
+{
+    try
+    {
+        Process.Start("notepad.exe", "ProjectEmail.xml");
+    }
+    catch
+    {
+        MessageBox.Show("Unable to open the ProjectEmail.xml from here.  Please make sure it exists in the same directory as the tool.", "Error");
+    }
+
+}*/
+
+/*
+private void button2_Click(object sender, EventArgs e)
+{
+    string cookies;
+    string loginToken;
+    string username = textBox1.Text;
+    string password = textBox2.Text;
+    string response;
+    string url = "https://tools.tmeic.com/metals/editproducts.cgi?action=add&classification=Metals%20Projects";
+    username = username.Replace("@", "%40");
+
+    if (password == "")
+    {
+        MessageBox.Show("You must enter your Bugzilla credentials to test the cookies.", "Error!");
+        return;
+    }
+
+
+    try
+    {
+        //Load XML Document
+        try
+        {
+            System.Xml.XmlDocument DocTest = new System.Xml.XmlDocument();
+            DocTest.Load(@"ProjectEmail.xml");
+        }
+        catch
+        {
+            MessageBox.Show("Please make sure that the ProjectEmail.xml file is located in the same file as this tool when it is run.", "Error");
+            return;
+        }
+        System.Xml.XmlDocument Doc = new System.Xml.XmlDocument();
+        Doc.Load(@"ProjectEmail.xml");
+
+        XmlNode curNode = Doc.SelectSingleNode("Configuration/Cookies");
+        if (curNode == null)
+        {
+            MessageBox.Show("Problem with ProjectEmail.xml/Configuration/Cookies");
+            return;
+        }
+        cookies = curNode.InnerText;
+
+        curNode = Doc.SelectSingleNode("Configuration/LoginToken");
+        if (curNode == null)
+        {
+            MessageBox.Show("Problem with ProjectEmail.xml/Configuration/LoginToken");
+            return;
+        }
+        loginToken = curNode.InnerText;
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("An exception was thrown while reading the ProjectEmail.xml. Please insure that it is in the same folder as the project creation utility. ", "Error!");
+        return;
+    }
+
+    using (WebClient wb = new WebClient())
+    {
+        try
+        {
+            wb.Headers.Add(HttpRequestHeader.Cookie, cookies);
+
+            CredentialCache credentialCache = new CredentialCache();
+            credentialCache.Add(new System.Uri(url), "Basic", new NetworkCredential(username, password, "tools.tmeic.com"));
+
+
+            wb.Credentials = credentialCache;
+            wb.BaseAddress = url;
+
+            response = wb.UploadString(url, "POST", "Bugzilla_login=" + username + "&Bugzilla_password=" + password + "&Bugzilla_login_token=" + loginToken + "&GoAheadAndLogIn=Log+in");
+
+            if (response.Contains("<title>Match Failed</title>"))
+                MessageBox.Show("Failed to match one or more of the input engineer emails. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error!");
+            else if (response.Contains("<title>Confirm Match</title>"))
+                MessageBox.Show("Failed to match entered engineer email. Please make sure each entry is correct. Check the ProjectEmail.xml as well.", "Error");
+            else if (response.Contains("<title>Untrusted Authentication Request</title>"))
+                MessageBox.Show("Bugzilla returned the Untrusted Authentication Request page. The Cookies or Login Tokens are invalid","Failed!");
+            else if (response.Contains("<title>Invalid Username Or Password</title>"))
+                MessageBox.Show("Invalid Username Or Password.");
+            else if (response.Contains("<title>Add Product</title>"))
+                MessageBox.Show("Successfully sent command. Cookies and Tokens are still valid.", "Success! ");                    
+            else if (response.Contains("<title>Authorization Required</title>"))
+                MessageBox.Show("Authorization Required. You are not an Admin!");
+            else
+                MessageBox.Show("Unexpected response. Unsure of success.");
+        }
+        catch
+        {
+            MessageBox.Show("Exception thrown. Operation failed");
+        }
+    }
+}
+*/

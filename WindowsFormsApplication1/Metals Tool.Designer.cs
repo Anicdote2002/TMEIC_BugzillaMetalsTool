@@ -64,8 +64,8 @@ namespace WindowsFormsApplication1
             this.label19 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox_ProjMan = new System.Windows.Forms.ComboBox();
-            this.comboBox_SWEngineer = new System.Windows.Forms.ComboBox();
-            this.comboBox_HWEngineer = new System.Windows.Forms.ComboBox();
+            this.comboBox_SystemEngineer = new System.Windows.Forms.ComboBox();
+            this.comboBox_HardwareEngineer = new System.Windows.Forms.ComboBox();
             this.comboBox_ContEng = new System.Windows.Forms.ComboBox();
             this.comboBox_HMIEng = new System.Windows.Forms.ComboBox();
             this.comboBox_AppEng = new System.Windows.Forms.ComboBox();
@@ -340,25 +340,25 @@ namespace WindowsFormsApplication1
             this.comboBox_ProjMan.Name = "comboBox_ProjMan";
             this.comboBox_ProjMan.Size = new System.Drawing.Size(197, 24);
             this.comboBox_ProjMan.TabIndex = 20;
-            this.comboBox_ProjMan.KeyPress += comboBox_ProjMan_TextChanged;
+            this.comboBox_ProjMan.KeyPress += comboBox_ProjMain_TextChanged;
             // 
-            // comboBox_SWEngineer
+            // comboBox_SystemEngineer
             // 
-            this.comboBox_SWEngineer.FormattingEnabled = true;
-            this.comboBox_SWEngineer.Location = new System.Drawing.Point(154, 690);
-            this.comboBox_SWEngineer.Name = "comboBox_SWEngineer";
-            this.comboBox_SWEngineer.Size = new System.Drawing.Size(197, 24);
-            this.comboBox_SWEngineer.TabIndex = 21;
-            this.comboBox_SWEngineer.KeyPress += comboBox_SWEngineer_TextChanged;
+            this.comboBox_SystemEngineer.FormattingEnabled = true;
+            this.comboBox_SystemEngineer.Location = new System.Drawing.Point(154, 690);
+            this.comboBox_SystemEngineer.Name = "comboBox_SystemEngineer";
+            this.comboBox_SystemEngineer.Size = new System.Drawing.Size(197, 24);
+            this.comboBox_SystemEngineer.TabIndex = 21;
+            this.comboBox_SystemEngineer.KeyPress += comboBox_System_Engineer_TextChanged;
             // 
-            // comboBox_HWEngineer
+            // comboBox_HardwareEngineer
             // 
-            this.comboBox_HWEngineer.FormattingEnabled = true;
-            this.comboBox_HWEngineer.Location = new System.Drawing.Point(154, 720);
-            this.comboBox_HWEngineer.Name = "comboBox_HWEngineer";
-            this.comboBox_HWEngineer.Size = new System.Drawing.Size(198, 24);
-            this.comboBox_HWEngineer.TabIndex = 22;
-            this.comboBox_HWEngineer.KeyPress += comboBox_HWEngineer_TextChanged;
+            this.comboBox_HardwareEngineer.FormattingEnabled = true;
+            this.comboBox_HardwareEngineer.Location = new System.Drawing.Point(154, 720);
+            this.comboBox_HardwareEngineer.Name = "comboBox_HardwareEngineer";
+            this.comboBox_HardwareEngineer.Size = new System.Drawing.Size(198, 24);
+            this.comboBox_HardwareEngineer.TabIndex = 22;
+            this.comboBox_HardwareEngineer.KeyPress += comboBox_Hardware_Engineer_TextChanged;
             // 
             // comboBox_ContEng
             // 
@@ -404,7 +404,6 @@ namespace WindowsFormsApplication1
             this.comboBox_DriveEng.Size = new System.Drawing.Size(199, 24);
             this.comboBox_DriveEng.TabIndex = 27;
             this.comboBox_DriveEng.KeyPress += comboBox_DriveEng_TextChanged;
-
             // 
             // checkedListBox_DriveComp
             // 
@@ -519,8 +518,8 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.comboBox_AppEng);
             this.Controls.Add(this.comboBox_HMIEng);
             this.Controls.Add(this.comboBox_ContEng);
-            this.Controls.Add(this.comboBox_HWEngineer);
-            this.Controls.Add(this.comboBox_SWEngineer);
+            this.Controls.Add(this.comboBox_HardwareEngineer);
+            this.Controls.Add(this.comboBox_SystemEngineer);
             this.Controls.Add(this.comboBox_ProjMan);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label19);
@@ -552,11 +551,15 @@ namespace WindowsFormsApplication1
             this.MaximizeBox = false;
             this.Name = "Metals_tool";
             this.Text = "Metals Tool";
-            this.Load += new System.EventHandler(this.Metals_tool_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void comboBox_ProjMan_TextChanged(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
@@ -587,8 +590,8 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox_ProjMan;
-        private System.Windows.Forms.ComboBox comboBox_SWEngineer;
-        private System.Windows.Forms.ComboBox comboBox_HWEngineer;
+        private System.Windows.Forms.ComboBox comboBox_SystemEngineer;
+        private System.Windows.Forms.ComboBox comboBox_HardwareEngineer;
         private System.Windows.Forms.ComboBox comboBox_ContEng;
         private System.Windows.Forms.ComboBox comboBox_HMIEng;
         private System.Windows.Forms.ComboBox comboBox_AppEng;
