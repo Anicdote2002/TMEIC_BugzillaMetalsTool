@@ -13,26 +13,11 @@ using System;
 using System.Windows.Forms;
 
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using System.IO;
 using System.Net;
-using System.Collections.Specialized;
-using System.Web;
 using System.Xml;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.Security.Policy;
 using HtmlAgilityPack;
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Diagnostics.Eventing.Reader;
-
 namespace WindowsFormsApplication1
 {
 
