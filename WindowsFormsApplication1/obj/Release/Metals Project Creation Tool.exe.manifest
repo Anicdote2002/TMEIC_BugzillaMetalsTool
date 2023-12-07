@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Metals Project Creation Tool.exe" size="62392">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Metals Project Creation Tool.exe" size="61880">
       <assemblyIdentity name="Metals Project Creation Tool" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>skcSRVLSgttL1JLzHZB2yIYwEizjtm4q1KXP2/+dhNc=</dsig:DigestValue>
+        <dsig:DigestValue>X4OON6P0oryZj1mY87fsDlyNKbkiXeSXLimm28WqKVQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

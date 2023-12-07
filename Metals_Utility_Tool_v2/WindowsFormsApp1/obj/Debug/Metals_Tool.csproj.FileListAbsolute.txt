@@ -1,0 +1,14 @@
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\Metals_Tool.csproj.AssemblyReference.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Metals_tool.resources
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\Metals_Tool.csproj.GenerateResource.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\Metals_Tool.csproj.CoreCompileInputs.cache
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\Metals_Tool.csproj.CopyComplete
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Aniruddh.Chauhan\Documents\Bugzilla-Metals_Project_Creation_Utility\Metals_Utility_Tool_v2\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
